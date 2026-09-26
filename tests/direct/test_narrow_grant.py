@@ -58,7 +58,7 @@ def _grant(**overrides):
 def contract(direct_deploy):
     # Pinned to the exact genvm release matching the contract's own
     # "Depends": "py-genlayer:..." header.
-    return direct_deploy(CONTRACT_PATH, sdk_version="v0.2.16")
+    return direct_deploy(CONTRACT_PATH, sdk_version="v0.6.0-rc6")
 
 
 def _issue_default_origin(contract, direct_vm, owner, allow_hop=True, cap="25000"):

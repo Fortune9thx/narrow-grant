@@ -17,10 +17,6 @@ test. We patch os.unlink to swallow exactly that failure so test
 collection can proceed; the OS will actually delete the temp file once
 fd 0 is closed/reused at process exit.
 
-This contract needs no other gltest WASI-mock patches: it uses only the
-plain "ExecPrompt" request type (gl.nondet.exec_prompt with no
-response_format="json") and gl.nondet.web.get -- both are already
-handled by gltest's stock direct-mode mock via vm.mock_llm/vm.mock_web.
 """
 
 import os
@@ -36,3 +32,35 @@ def _tolerant_unlink(path, *args, **kwargs):
 
 
 os.unlink = _tolerant_unlink
+
+
+# ---------------------------------------------------------------------------
+# gltest's own LLM mock always tries to json.loads() a mock_llm() response
+# and, if it parses, returns the DECODED DICT instead of the literal string
+# (gltest/direct/wasi_mock.py's _handle_llm_request). contracts/NarrowGrant.py's
+# _run_witness_consensus calls gl.nondet.exec_prompt(prompt,
+# response_format="json"), and the real SDK's own JSON-result decoder
+# (genlayer.nondet._decode_nondet_json) expects the underlying nondet
+# response to be raw TEXT that IT parses itself -- receiving an
+# already-parsed dict from the mock fails with "JSON result is not text".
+#
+# This is a test-harness gap, not a contract bug -- the identical fix
+# already confirmed for this class of gap on a sibling project. Patch
+# _handle_llm_request to keep the literal string exec_prompt's own
+# response_format="json" decoder expects, instead of auto-decoding it.
+# ---------------------------------------------------------------------------
+
+from gltest.direct import wasi_mock as _wasi_mock
+
+_original_handle_llm_request = _wasi_mock._handle_llm_request
+
+
+def _patched_handle_llm_request(vm, data):
+    prompt = data.get("prompt", "")
+    response = vm._match_llm_mock(prompt)
+    if response is not None:
+        return {"ok": response}
+    return _original_handle_llm_request(vm, data)
+
+
+_wasi_mock._handle_llm_request = _patched_handle_llm_request

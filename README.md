@@ -40,6 +40,17 @@ not return successfully can never produce a hop or a recorded use.
 There are no funds, no reputation, and no scores anywhere in this
 contract.
 
+## Live deployment
+
+Deployed on **GenLayer Studio Devnet** at
+[`0x71A09Ff4d0cc11132A32c8509aCeE3CBdE111aE5`](https://studio.genlayer.com/)
+(`FINALIZED`). See [PORTAL_SUBMISSION.md](PORTAL_SUBMISSION.md) for the
+deploy transaction and a full live smoke test: a declared origin, a
+narrowed hop, a `prove_use` by the actual grantee, a cap-increase hop
+rejected by the contract itself (with the decoded on-chain error
+message), and a checkable hop independently verified against a live
+HTTPS witness.
+
 ## Why containment is never an LLM decision
 
 A grant is a structured record -- an action list, an asset string, an

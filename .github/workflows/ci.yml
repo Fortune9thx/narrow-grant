@@ -19,7 +19,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install toolchain
-        run: pip install genlayer-test==0.29.2 genvm-linter==0.11.0
+        run: pip install --pre genlayer-test==0.30.0rc2 genvm-linter==0.11.1rc2
 
       - name: Lint contract
         run: genvm-lint check contracts/NarrowGrant.py

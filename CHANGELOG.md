@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0 -- 2026-09-26
+
+Migrated to the current v0.3.0 GenLayer standard-library API (header
+hash `5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng`,
+`gl.contract.Contract`, `gl.vm.run_nondet`, `gl.message.raw`), matching
+what Studio Devnet actually accepts. All 58 direct-mode tests still
+pass; `genvm-lint` still clean. Deployed live to GenLayer Studio Devnet
+at `0x71A09Ff4d0cc11132A32c8509aCeE3CBdE111aE5` (`FINALIZED`) and
+verified with a full live smoke test (`scripts/smoke.mjs`): a declared
+origin, a narrowed hop, `prove_use` by the actual grantee, a
+cap-increase hop rejected by the contract itself with the exact decoded
+error message, and a checkable hop independently verified by every
+validator against a live HTTPS witness. See `PORTAL_SUBMISSION.md` for
+full transaction hashes and results.
+
 ## 1.0.0 -- 2026-09-26
 
 Initial release.

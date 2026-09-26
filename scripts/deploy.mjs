@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { ethers } from "ethers";
 import { createClient, createAccount } from "genlayer-js";
-import { testnetBradbury } from "genlayer-js/chains";
+import { studioDevnet } from "genlayer-js/chains";
 
 const KEYSTORE_PATH = process.env.NARROWGRANT_KEYSTORE_PATH;
 const KEYSTORE_PASSWORD = process.env.NARROWGRANT_KEYSTORE_PASSWORD;
@@ -27,7 +27,7 @@ if (account.address.toLowerCase() !== wallet.address.toLowerCase()) {
 }
 console.log("Deployer address:", account.address);
 
-const client = createClient({ chain: testnetBradbury, account });
+const client = createClient({ chain: studioDevnet, account });
 
 const balance = await client.getBalance({ address: account.address });
 console.log("Balance (wei):", balance.toString());
@@ -68,7 +68,7 @@ fs.writeFileSync(
   "scripts/deployed.json",
   JSON.stringify(
     {
-      network: "testnetBradbury",
+      network: "studioDevnet",
       deployTxHash,
       contractAddress: contractAddress ?? null,
       deployerAddress: account.address,

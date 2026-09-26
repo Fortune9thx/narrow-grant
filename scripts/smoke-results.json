@@ -1,0 +1,41 @@
+{
+  "network": "studioDevnet",
+  "chainId": 61997,
+  "contractAddress": "0x71A09Ff4d0cc11132A32c8509aCeE3CBdE111aE5",
+  "step1_issue_origin": {
+    "tx": "0x9e67575716ad4b281f77b917b8b8388b96a3d4021f2edd1703f0dd9961d9fd66",
+    "result": "FINISHED_WITH_RETURN",
+    "origin_id": "o0",
+    "get_origin": "{\"allow_hop\": true, \"created_at\": 1790424283, \"depth\": 0, \"expires_at\": 1793016278, \"frozen\": false, \"grant\": {\"actions\": [\"pay\", \"refund\"], \"asset\": \"USDC\", \"cap\": \"1000\", \"extract_instruction\": \"\", \"mode\": \"declared\", \"note\": \"\", \"period\": \"month\", \"schema\": \"narrowgrant.v1\", \"unit\": \"usd\", \"witness_url\": \"\"}, \"kind\": \"origin\", \"origin_id\": \"o0\", \"owner\": \"0xC6E6d3b2acCaECeCeB40Ad4bD3dF123DDCB4e537\"}"
+  },
+  "step2_issue_hop_narrowed": {
+    "tx": "0x2c3ea5f9ff9151fd3989e2c069cffd2d47e75c5219ca164dbacdd51e4f00f333",
+    "result": "FINISHED_WITH_RETURN",
+    "hop_id": "h0",
+    "get_hop": "{\"allow_hop\": true, \"created_at\": 1790424324, \"depth\": 1, \"expires_at\": 1793016278, \"frozen\": false, \"grant\": {\"actions\": [\"pay\"], \"asset\": \"USDC\", \"cap\": \"500\", \"extract_instruction\": \"\", \"mode\": \"declared\", \"note\": \"\", \"period\": \"tx\", \"schema\": \"narrowgrant.v1\", \"unit\": \"usd\", \"witness_url\": \"\"}, \"grantee\": \"0x7726df49d7488f853135689cAa94c1a7F7301513\", \"hop_id\": \"h0\", \"issued_by\": \"0xC6E6d3b2acCaECeCeB40Ad4bD3dF123DDCB4e537\", \"kind\": \"hop\", \"parent_id\": \"o0\", \"parent_kind\": \"origin\"}"
+  },
+  "step3_prove_use_by_grantee": {
+    "tx": "0x1482bc21e865c906df1c19e03ffe98bb1ffbe8dcfb784b0646c84d945091f640",
+    "sender": "0x7726df49d7488f853135689cAa94c1a7F7301513",
+    "status": "FINALIZED",
+    "result": "FINISHED_WITH_RETURN",
+    "use_id": "u0",
+    "action": "pay",
+    "amount": "300"
+  },
+  "step4_rejected_cap_increase": {
+    "tx": "0x183a2f18f678af875248c0f4c27a63c749a9028bb092967cea7f6a05cbc33f28",
+    "result": "FINISHED_WITH_ERROR",
+    "decoded_leader_result": "hop cap cannot exceed the parent's cap",
+    "agreement": "leader and the sole validator's independent receipts matched byte-for-byte",
+    "get_hop_count_after": 1
+  },
+  "step5_checkable_hop_live_witness": {
+    "tx": "0x80d6efc2822aabd5147c61f24a0f4e3b10117f4bc6adfd7a00c1ebba75fcb5cb",
+    "result": "FINISHED_WITH_RETURN",
+    "witness_url": "https://httpbin.org/base64/Y2FwOiA1MDAsIGFzc2V0OiBVU0RDLCB1bml0OiB1c2Q=",
+    "witness_decoded_body": "cap: 500, asset: USDC, unit: usd",
+    "declared_grant": { "cap": "500", "asset": "USDC", "unit": "usd" },
+    "get_hop_count_after": 2
+  }
+}

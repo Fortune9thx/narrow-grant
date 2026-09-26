@@ -9,14 +9,14 @@ the specific place in `contracts/NarrowGrant.py` that satisfies it.
 |---|---|
 | Origin grant is structured, not an essay | `_parse_grant` accepts exactly ten typed fields (`schema`/`actions`/`asset`/`cap`/`unit`/`period`/`mode`/`witness_url`/`extract_instruction`/`note`) and rejects any unknown key. |
 | A hop is allowed only when every structured field is a deterministic narrowing of its parent | `_check_narrowing` -- ten checks, all plain Python (set subset, string equality, integer inequality, a fixed period-rank table), run in full before any nondeterministic code. |
-| If mode is checkable, every validator independently fetches the witness URL and extracts the numeric cap | `_run_witness_consensus`'s `validator_fn` never inspects the leader's claim -- it calls `leader_fn` again, its own independent fetch and extraction, and only agrees if all five compared fields match. |
+| If mode is checkable, every validator independently fetches the witness URL and extracts the numeric cap | `_run_witness_consensus`'s `validator_fn` never inspects the leader's claim -- it calls `leader_fn` again (via `gl.vm.run_nondet`, the current SDK's name for the unsandboxed leader/validator primitive), its own independent fetch and extraction, and only agrees if all five compared fields match. |
 | Failed fetch cannot create a hop or prove a use | `leader_fn` returns `fetch_ok: false` before ever calling the model; `issue_hop`/`prove_use` both check `verdict["fetch_ok"]` and raise before any storage mutation. |
 | The LLM never decides containment of two paragraphs | Narrowing is entirely `_check_narrowing`'s deterministic comparisons; the only model call anywhere in the file (`_run_witness_consensus`) extracts three short fields from one page, never compares two grants or judges containment. |
 | No funds, no reputation, no scores | The contract has no payable method, no value-transfer call, and no numeric field anywhere in storage that resembles a score or balance -- `uses` records are receipts (`use_id`/`hop_id`/`action`/`amount`/`sender`/`created_at`), not a ledger. |
 | Records stored as `TreeMap[str, str]` JSON strings | `origins`/`hops`/`uses`/`latest_origin_by_owner`/`latest_hop_by_grantee` are all `TreeMap[str, str]`; every record is `json.dumps(..., sort_keys=True)`'d before storage. |
 | Views return JSON strings, not dicts | `get_origin`/`get_hop`/`walk_line` all return the raw stored JSON string (or, for `walk_line`, a freshly-built JSON array string) -- never a `dict`. |
 | `gl.vm.UserError` for user errors | Every validation failure across `_parse_grant`, `_check_narrowing`, `_normalize_grantee`, `_validate_amount`, and every method's own guard clauses raises `gl.vm.UserError`. |
-| Header format | Line 1 is `# v0.2.16`; line 2 is exactly `# { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }`. |
+| Header format | Line 1 is `# v0.3.0`; line 2 is exactly `# { "Depends": "py-genlayer:5jycge4q8k23462jtb0b9fyey1s9qz928sz2nbrd9mg4sxqg2qng" }` -- the current canonical `py-genlayer` runner per GenLayer's own published runner list. |
 | Public method surface | `issue_origin`, `issue_hop`, `freeze_origin`, `freeze_hop`, `prove_use`, `get_origin`, `get_hop`, `walk_line`, `get_origin_count`, `get_hop_count` -- exactly the ten requested. |
 
 ## Mapping against documented real rejection patterns

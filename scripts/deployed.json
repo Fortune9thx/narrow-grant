@@ -1,0 +1,10 @@
+{
+  "network": "studioDevnet",
+  "chainId": 61997,
+  "deployTxHash": "0x6b8b92e6c2843e424c3bfa20006b471174111462122b14b5873fa8726701d408",
+  "contractAddress": "0x71A09Ff4d0cc11132A32c8509aCeE3CBdE111aE5",
+  "deployerAddress": "0xC6E6d3b2acCaECeCeB40Ad4bD3dF123DDCB4e537",
+  "statusName": "FINALIZED",
+  "txExecutionResultName": "FINISHED_WITH_RETURN",
+  "deployedAt": "2026-09-26T00:00:00.000Z"
+}
