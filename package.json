@@ -1,0 +1,16 @@
+{
+  "name": "narrow-grant",
+  "version": "1.0.0",
+  "description": "A reusable GenLayer Intelligent Contract primitive for attenuated capability hops.",
+  "private": true,
+  "scripts": {
+    "deploy": "node scripts/deploy.mjs"
+  },
+  "keywords": ["genlayer", "intelligent-contract"],
+  "author": "Fortunex9",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.17.0",
+    "genlayer-js": "^2.0.0-rc.1"
+  }
+}

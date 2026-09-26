@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install toolchain
+        run: pip install genlayer-test==0.29.2 genvm-linter==0.11.0
+
+      - name: Lint contract
+        run: genvm-lint check contracts/NarrowGrant.py
+
+      - name: Run direct-mode tests
+        run: gltest tests/direct
